@@ -1,4 +1,4 @@
-package com.decent.springboot_sell.service.iimpl;
+package com.decent.springboot_sell.service.impl;
 
 import com.decent.springboot_sell.entity.ProductCategory;
 import com.decent.springboot_sell.service.CategoryService;
