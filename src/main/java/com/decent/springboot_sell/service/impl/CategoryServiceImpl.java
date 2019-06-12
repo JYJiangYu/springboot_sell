@@ -2,6 +2,7 @@ package com.decent.springboot_sell.service.impl;
 
 import com.decent.springboot_sell.entity.ProductCategory;
 import com.decent.springboot_sell.service.CategoryService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  * @date 2019/5/30 17:18
  * @email jiangyu9633@foxmail.com
  */
+@Service
 public class CategoryServiceImpl implements CategoryService {
     @Override
     public ProductCategory findOne(Integer categoryId) {

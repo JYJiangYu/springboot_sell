@@ -23,7 +23,7 @@ public class ProductCategoryRepositoryTest {
     @Test
     //@Transactional 在这里起回滚作用
     public void test1() {
-        repository.save(new ProductCategory("男生最爱", 2));
+        repository.save(new ProductCategory("女最爱", 3));
         Optional<ProductCategory> optional = repository.findById(3);
         ProductCategory productCategory = optional.get();
         log.error(productCategory.toString() + "\n");
