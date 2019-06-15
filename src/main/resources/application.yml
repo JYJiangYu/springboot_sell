@@ -2,9 +2,9 @@ spring:
   datasource:
     username: root
     password: 123456
-    url: jdbc:mysql://192.168.3.13:3306/sell?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://192.168.3.17:3306/sell?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true
   redis:
-    host: 192.168.3.11
+    host: 192.168.3.17

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.util.Random;
+
 /**
  * @author jiangyu
  * @date 2019/6/12 22:15
@@ -27,9 +29,9 @@ public class MyAopConfiguration {
     @Before("pointCutMethod()()")
     public void beforeMethod(JoinPoint joinPoint) {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        log.info("url = {}", attributes.getRequest().getRequestURL());
-        log.info("method = {}", attributes.getRequest().getMethod());
+        log.info("{},url = {}", attributes.getRequest().getMethod(), attributes.getRequest().getRequestURL());
         //log.info("ip = {}", attributes.getRequest().getRemoteAddr());
         //log.info("class_method = {}", joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
     }
+
 }

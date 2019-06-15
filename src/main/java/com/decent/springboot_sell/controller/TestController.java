@@ -1,7 +1,9 @@
 package com.decent.springboot_sell.controller;
 
 
+import com.decent.springboot_sell.entity.ProductInfo;
 import com.decent.springboot_sell.entity.User;
+import com.decent.springboot_sell.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -23,10 +25,17 @@ public class TestController {
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private ProductRepository productRepository;
 
     @RequestMapping("")
     public String index() {
         return "index";
+    }
+
+    @RequestMapping("testMySQL/{id}")
+    public ProductInfo testMySQL(@PathVariable String id) {
+        return productRepository.findById(id).orElseGet(() -> ProductInfo.builder().productName("暂无产品信息!").build());
     }
 
 

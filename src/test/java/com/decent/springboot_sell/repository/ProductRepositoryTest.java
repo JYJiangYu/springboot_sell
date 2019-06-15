@@ -9,8 +9,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -24,10 +27,10 @@ public class ProductRepositoryTest {
 
 
     @Test
-    //@Transactional 在这里起回滚作用
+    //@Transactional //在这里起回滚作用
     public void testSave() {
         //ProductInfo productInfo = new ProductInfo();
-        ProductInfo productInfo = ProductInfo.builder().productId("3").productName("冰可乐").
+        ProductInfo productInfo = ProductInfo.builder().productId("1").productName("冰可乐").
                 productPrice(new BigDecimal(3)).productStock(20).
                 productIcon("http://baidu.com").productStatus(ProductStateEnum.UP.getCode()).categoryType(2).build();
         repository.save(productInfo);
@@ -46,6 +49,15 @@ public class ProductRepositoryTest {
         log.info("\n======" + productInfo + "\n");
         Assert.assertEquals("noName...", productInfo.getProductName());
 
+
+    }
+
+
+    @Test
+    //@Transactional 在这里起回滚作用
+    public void findAllTest() {
+        Page<ProductInfo> all = repository.findAll(new PageRequest(0, 2));
+        System.out.println(all.getContent());
 
     }
 
