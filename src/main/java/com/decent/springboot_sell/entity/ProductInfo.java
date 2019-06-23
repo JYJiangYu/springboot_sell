@@ -1,5 +1,6 @@
 package com.decent.springboot_sell.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +18,7 @@ import java.math.BigDecimal;
 @Entity
 @Builder
 @AllArgsConstructor
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProductInfo {
     @Id
     private String productId;

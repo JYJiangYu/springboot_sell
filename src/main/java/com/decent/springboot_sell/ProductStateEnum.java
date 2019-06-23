@@ -2,6 +2,8 @@ package com.decent.springboot_sell;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+
 @Getter
 public enum ProductStateEnum {
     UP(0, "上架"),
@@ -16,9 +18,11 @@ public enum ProductStateEnum {
     }
 
     public static void main(String[] args) {
-        System.out.println(ProductStateEnum.UP);
-        System.out.println(ProductStateEnum.UP.getCode());
-        System.out.println(ProductStateEnum.UP.getMessage());
+        ProductStateEnum[] enumConstants = ProductStateEnum.class.getEnumConstants();
+        System.out.println(Arrays.toString(enumConstants));
+        Long theLong = 1L;
+        Integer theInt = 1;
+        System.out.println(theLong == Long.valueOf(theInt));
     }
 
 }

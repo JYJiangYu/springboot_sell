@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -62,5 +64,14 @@ public class TestController {
         return "Operation Is OK !";
     }
 
+
+    @GetMapping("setCookie")
+    public String setCookie(HttpServletResponse response) {
+        Cookie cookie = new Cookie("name", "jiangyu");
+        cookie.setPath("/");
+        cookie.setMaxAge(15);
+        response.addCookie(cookie);
+        return "Operation Is OK !";
+    }
 
 }

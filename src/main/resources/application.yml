@@ -8,3 +8,5 @@ spring:
     show-sql: true
   redis:
     host: 192.168.3.17
+  jackson:
+    default-property-inclusion: non_null
