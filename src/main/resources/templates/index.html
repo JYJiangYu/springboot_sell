@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+This is index !
+<audio id="music" loop="loop">
+    <source src="/video/chinia-1.mp3" type="audio/mpeg"/>
+</audio>
+</body>
+<script>
+    var websocket = null;
+    if ('WebSocket' in window) {
+        websocket = new WebSocket("ws://localhost:8080/websocket");
+    } else {
+        alert("浏览器不支持webSocket!");
+    }
+
+    websocket.onopen = function (event) {
+        console.log(event, '建立连接');
+        websocket.send("发送数据");
+        console.log("数据发送中...");
+    }
+    websocket.onmessage = function (event) {
+        console.log('接受到消息', event.data);
+        document.getElementById("music").play();
+        var timer = window.setTimeout(function () {
+            document.getElementById("music").pause();
+        }, 15000)
+
+    }
+    websocket.onerror = function (event) {
+        console.log(event, '错误..')
+    }
+    websocket.onclose = function (event) {
+        console.log(event, '关闭连接')
+    }
+    window.onbeforeunload = function (ev) {
+        websocket.close();
+    }
+
+</script>
+</html>

@@ -10,3 +10,8 @@ spring:
     host: 192.168.3.17
   jackson:
     default-property-inclusion: non_null
+  thymeleaf:
+    cache: false
+wechat:
+  appId: wx89bfa4d6cdcbe878
+  appSecret: c84cb17133b2b717c8ed4eb6799b5c7e

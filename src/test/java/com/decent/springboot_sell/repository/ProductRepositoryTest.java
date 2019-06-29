@@ -1,7 +1,6 @@
 package com.decent.springboot_sell.repository;
 
-import com.decent.springboot_sell.ProductStateEnum;
-import com.decent.springboot_sell.entity.ProductCategory;
+import com.decent.springboot_sell.enums.ProductStateEnum;
 import com.decent.springboot_sell.entity.ProductInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
@@ -13,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;

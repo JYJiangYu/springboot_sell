@@ -1,4 +1,4 @@
-package com.decent.springboot_sell;
+package com.decent.springboot_sell.enums;
 
 import lombok.Getter;
 

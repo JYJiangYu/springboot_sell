@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +21,7 @@ import java.util.Optional;
  * @date 2019/6/9 14:21
  * @email jiangyu9633@foxmail.com
  */
-@RestController
+@Controller
 public class TestController {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -38,12 +36,14 @@ public class TestController {
     }
 
     @RequestMapping("testMySQL/{id}")
+    @ResponseBody
     public ProductInfo testMySQL(@PathVariable String id) {
         return productRepository.findById(id).orElseGet(() -> ProductInfo.builder().productName("暂无产品信息!").build());
     }
 
 
     @RequestMapping("optStringRedis/{redisInfo}")
+    @ResponseBody
     public String saveStringRedisInfo(@PathVariable String redisInfo) {
         System.out.println(redisInfo);
         if (redisInfo.contains("=")) {
@@ -57,6 +57,7 @@ public class TestController {
 
 
     @RequestMapping("optObjectRedis")
+    @ResponseBody
     public String saveObjectRedisInfo() {
         User user = User.builder().id("1").username("姜禹").age(9999).build();
         System.out.println(user);
@@ -68,6 +69,7 @@ public class TestController {
 
 
     @GetMapping("setCookie")
+    @ResponseBody
     public String setCookie(HttpServletResponse response) {
         Cookie cookie = new Cookie("name", "jiangyu");
         cookie.setPath("/");
