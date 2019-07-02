@@ -1,8 +1,10 @@
 package com.decent.springboot_sell.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.decent.springboot_sell.config.MyWeChatConfig;
 import com.decent.springboot_sell.service.WebSocketImpl;
 import com.decent.springboot_sell.util.WeChatUtil;
+import com.decent.springboot_sell.vo.WeChatUserInfoVo;
 import com.decent.springboot_sell.vo.wechatvo.TemplateData;
 import com.decent.springboot_sell.vo.wechatvo.TemplateSingleInfoVo;
 import com.decent.springboot_sell.vo.wechatvo.WeChatTemplateVo;
@@ -40,14 +42,12 @@ public class WeChatController {
     @GetMapping("testAccessToken")
     @ResponseBody
     public String testAccessToken() {
-        System.out.println(config);
         return WeChatUtil.getAccessToken();
     }
 
     @GetMapping("testpushTemplate")
     @ResponseBody
     public String testpushTemplate() throws IOException {
-        System.out.println(config);
         WeChatTemplateVo weChatTemplateVo = new WeChatTemplateVo();
         weChatTemplateVo.setTemplate_id("F1qT1AU4NV8L-4rF_t0Tdw7hFPc2Z40bRfhHNTLBdPs");
         weChatTemplateVo.setTouser("ojmxs1OIMb5xM2Vop6bZlBJ-gS6k");
@@ -61,6 +61,16 @@ public class WeChatController {
         WeChatUtil.pushTemplate(weChatTemplateVo);
         webSocket.sendMessage("成功发送模板消息..");
         return "OK";
+    }
+
+
+    @RequestMapping("webGetUserInfoRedirectUrl")
+    @ResponseBody
+    public WeChatUserInfoVo getUserInfoRedirectUrl(String code) throws IOException {
+        JSONObject webAuthAccessToken = WeChatUtil.getWebAuthAccessToken(code);
+        WeChatUserInfoVo userInfoVo = WeChatUtil.getUserInfoByWebToken(webAuthAccessToken);
+        log.info(userInfoVo.toString());
+        return userInfoVo;
     }
 
 }

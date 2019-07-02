@@ -1,6 +1,8 @@
 package com.decent.springboot_sell.util;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.decent.springboot_sell.vo.WeChatUserInfoVo;
 import com.decent.springboot_sell.vo.wechatvo.WeChatTemplateVo;
 import lombok.extern.slf4j.Slf4j;
 
@@ -8,6 +10,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author jiangyu
@@ -16,7 +19,6 @@ import java.util.Date;
  */
 @Slf4j
 public class WeChatUtil {
-
     private static WeChatUtil weChatUtil;
     //过期时间
     private static Long expiresTime;
@@ -28,6 +30,8 @@ public class WeChatUtil {
     private static final String WX_TOKEN = "JIANGYU_WX_TOKEN";
     private static final String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
     private static final String PUSH_TEMPLATE_URL = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=ACCESS_TOKEN";
+    private static final String WEB_AUTH_TOKEN_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
+    private static final String GET_USERINFO_URL = "https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN";
 
 
     public static String getAccessToken() {
@@ -43,18 +47,27 @@ public class WeChatUtil {
     }
 
 
+    public static JSONObject getWebAuthAccessToken(String code) {
+        String url = WEB_AUTH_TOKEN_URL.replace("APPID", APP_ID).replace("SECRET", APP_SECRET).replace("CODE", code);
+        log.info("webAccessToken_url = {}", url);
+        String jsonResult = HttpUtil.get(url);
+        JSONObject jsonObject = JSONObject.parseObject(jsonResult);
+        return jsonObject;
+    }
+
+    public static WeChatUserInfoVo getUserInfoByWebToken(JSONObject jsonObject) {
+        String webAccessToken = jsonObject.getString("access_token");
+        String openId = jsonObject.getString("openid");
+        String jsonResult = HttpUtil.get(GET_USERINFO_URL.replace("ACCESS_TOKEN", webAccessToken).replace("OPENID", openId));
+        WeChatUserInfoVo userInfoVo = JSONObject.parseObject(jsonResult, WeChatUserInfoVo.class);
+        return userInfoVo;
+    }
+
+
     public static String pushTemplate(WeChatTemplateVo weChatTemplateVo) {
         String jsonString = JSONObject.toJSONString(weChatTemplateVo);
         String result = HttpUtil.post(PUSH_TEMPLATE_URL.replace("ACCESS_TOKEN", getAccessToken()), jsonString);
         return result;
-    }
-
-
-    public static void main(String[] args) {
-
-        System.out.println(System.currentTimeMillis());
-        System.out.println(new Date().getTime());
-
     }
 
     public static String checkSignature(String signature, String timestamp, String nonce, String echostr) throws NoSuchAlgorithmException {
