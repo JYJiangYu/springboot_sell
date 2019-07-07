@@ -2,13 +2,17 @@ package com.decent.springboot_sell.vo;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author jiangyu
  * @date 2019/6/30 21:22
  * @email jiangyu9633@foxmail.com
  */
 @Data
-public class WeChatUserInfoVo {
+public class WeChatUserInfoVo implements Serializable {
+
+    private static final long serialVersionUID = -5137842373014512336L;
     /**
      * 用户的唯一标识
      */

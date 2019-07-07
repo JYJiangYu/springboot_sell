@@ -15,3 +15,7 @@ spring:
 wechat:
   appId: wx89bfa4d6cdcbe878
   appSecret: c84cb17133b2b717c8ed4eb6799b5c7e
+
+logging:
+  level:
+    com.decent.springboot_sell.repository.mapper: trace

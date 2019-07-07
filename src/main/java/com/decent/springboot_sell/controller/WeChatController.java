@@ -45,7 +45,7 @@ public class WeChatController {
         return WeChatUtil.getAccessToken();
     }
 
-    @GetMapping("testpushTemplate")
+    @GetMapping("testPushTemplate")
     @ResponseBody
     public String testpushTemplate() throws IOException {
         WeChatTemplateVo weChatTemplateVo = new WeChatTemplateVo();
