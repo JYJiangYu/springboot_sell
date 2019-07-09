@@ -49,7 +49,7 @@ public class WeChatController {
     @ResponseBody
     public String testpushTemplate() throws IOException {
         WeChatTemplateVo weChatTemplateVo = new WeChatTemplateVo();
-        weChatTemplateVo.setTemplate_id("F1qT1AU4NV8L-4rF_t0Tdw7hFPc2Z40bRfhHNTLBdPs");
+        weChatTemplateVo.setTemplateId("F1qT1AU4NV8L-4rF_t0Tdw7hFPc2Z40bRfhHNTLBdPs");
         weChatTemplateVo.setTouser("ojmxs1OIMb5xM2Vop6bZlBJ-gS6k");
         TemplateData templateData = new TemplateData();
         templateData.setFirst(new TemplateSingleInfoVo("成功推送消息!", "#87CEFA"));

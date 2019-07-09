@@ -8,12 +8,17 @@ import com.decent.springboot.sell.entity.ProductCategory;
 import com.decent.springboot.sell.entity.ProductInfo;
 import com.decent.springboot.sell.repository.ProductCategoryRepository;
 import com.decent.springboot.sell.repository.ProductRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,8 +28,10 @@ import java.util.stream.Collectors;
  * @date 2019/6/12 21:21
  * @email jiangyu9633@foxmail.com
  */
+@Slf4j
 @RestController
 @RequestMapping("/buyer/product")
+@CacheConfig(cacheNames = "product")
 public class BuyerProductController {
     @Autowired
     private ProductRepository productRepository;
@@ -32,9 +39,9 @@ public class BuyerProductController {
     private ProductCategoryRepository productCategoryRepository;
 
     @GetMapping("/list")
+    @Cacheable(cacheNames = "product", key = "'productInfoRedis'", unless = "#result.code==0")
     public ProductResultVo getAllProduct() {
         ProductResultVo productResultVo = new ProductResultVo<>();
-
         List<ProductInfo> productInfoList = productRepository.findAll();
         List<Integer> collect = productInfoList.stream().map(e -> e.getCategoryType()).collect(Collectors.toList());
         List<ProductCategory> byCategoryTypeIn = productCategoryRepository.findByCategoryTypeIn(collect);
@@ -58,5 +65,16 @@ public class BuyerProductController {
         productResultVo.setMessage("成功");
         productResultVo.setData(productVoArrayList);
         return productResultVo;
+    }
+
+    @RequestMapping("updateProduct")
+    @CacheEvict(cacheNames = "product", key = "'productInfoRedis'")
+    public String updateProduct(Integer price) {
+        ProductInfo productInfo = productRepository.findByProductId("1");
+        log.info(productInfo.toString());
+        productInfo.setProductPrice(new BigDecimal(price));
+        ProductInfo save = productRepository.save(productInfo);
+        log.info("保存之后的信息:{}", save.toString());
+        return "OK";
     }
 }

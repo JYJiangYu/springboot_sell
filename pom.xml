@@ -105,6 +105,7 @@
     </dependencies>
 
     <build>
+        <finalName>sell_jar</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

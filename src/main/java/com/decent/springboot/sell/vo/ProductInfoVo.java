@@ -3,6 +3,7 @@ package com.decent.springboot.sell.vo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -11,7 +12,9 @@ import java.math.BigDecimal;
  * @email jiangyu9633@foxmail.com
  */
 @Data
-public class ProductInfoVo {
+public class ProductInfoVo implements Serializable {
+
+    private static final long serialVersionUID = -4889187251138673064L;
     @JsonProperty("id")
     private String productId;
     @JsonProperty("name")
