@@ -10,8 +10,8 @@ import lombok.Data;
 @Data
 public class WeChatTemplateVo {
     private String touser;
-    private String template_id;
-    private String topcolor;
+    private String templateId;
+    private String topColor;
     private String url;
     private TemplateData data;
 

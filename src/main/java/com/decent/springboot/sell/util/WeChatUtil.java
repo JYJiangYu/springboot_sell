@@ -17,9 +17,13 @@ import java.util.Arrays;
 @Slf4j
 public class WeChatUtil {
     private static WeChatUtil weChatUtil;
-    //过期时间
+    /**
+     * 过期时间
+     */
     private static Long expiresTime;
-    //缓存的token
+    /**
+     * 缓存的token
+     */
     private static String cacheAccessToken;
     private static final String APP_ID = "wx89bfa4d6cdcbe878";
     private static final String APP_SECRET = "c84cb17133b2b717c8ed4eb6799b5c7e";
@@ -78,8 +82,9 @@ public class WeChatUtil {
         byte[] digest = instance.digest(stringBuilder.toString().getBytes());
         String digestStr = byteToStr(digest);
         boolean checkSignatureResult = digestStr != null ? signature.toUpperCase().equals(digestStr) : false;
-        if (checkSignatureResult)
+        if (checkSignatureResult) {
             return echostr;
+        }
         return "";
     }
 
@@ -105,10 +110,10 @@ public class WeChatUtil {
      * @return
      */
     public static String byteToHexStr(byte mByte) {
-        char[] Digit = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+        char[] digit = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
         char[] tempArr = new char[2];
-        tempArr[0] = Digit[(mByte >>> 4) & 0X0F];
-        tempArr[1] = Digit[mByte & 0X0F];
+        tempArr[0] = digit[(mByte >>> 4) & 0X0F];
+        tempArr[1] = digit[mByte & 0X0F];
         String s = new String(tempArr);
         return s;
     }

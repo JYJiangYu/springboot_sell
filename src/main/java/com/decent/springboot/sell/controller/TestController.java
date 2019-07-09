@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -29,6 +30,8 @@ public class TestController {
     @Autowired
     private ProductRepository productRepository;
 
+    private static final String SEPARTOR = "=";
+
     @RequestMapping("")
     public String index() {
         return "index";
@@ -36,7 +39,7 @@ public class TestController {
 
     @RequestMapping("testMySQL/{id}")
     @ResponseBody
-    public ProductInfo testMySQL(@PathVariable String id) {
+    public ProductInfo testMySql(@PathVariable String id) {
         return productRepository.findById(id).orElseGet(() -> ProductInfo.builder().productName("暂无产品信息!").build());
     }
 
@@ -45,8 +48,8 @@ public class TestController {
     @ResponseBody
     public String saveStringRedisInfo(@PathVariable String redisInfo) {
         System.out.println(redisInfo);
-        if (redisInfo.contains("=")) {
-            String[] redisInfoArray = redisInfo.split("=");
+        if (SEPARTOR.contains(redisInfo)) {
+            String[] redisInfoArray = redisInfo.split(SEPARTOR);
             stringRedisTemplate.opsForValue().set(redisInfoArray[0], redisInfoArray[1]);
             System.out.println(Arrays.toString(redisInfoArray));
             return "Operation Is OK !";
