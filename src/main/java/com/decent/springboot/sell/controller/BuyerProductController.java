@@ -39,7 +39,7 @@ public class BuyerProductController {
     private ProductCategoryRepository productCategoryRepository;
 
     @GetMapping("/list")
-    @Cacheable(cacheNames = "product", key = "'productInfoRedis'", unless = "#result.code==0")
+    @Cacheable(key = "'productInfoRedis'", unless = "#result.code!=0")
     public ProductResultVo getAllProduct() {
         ProductResultVo productResultVo = new ProductResultVo<>();
         List<ProductInfo> productInfoList = productRepository.findAll();
@@ -68,7 +68,7 @@ public class BuyerProductController {
     }
 
     @RequestMapping("updateProduct")
-    @CacheEvict(cacheNames = "product", key = "'productInfoRedis'")
+    @CacheEvict(key = "'productInfoRedis'")
     public String updateProduct(Integer price) {
         ProductInfo productInfo = productRepository.findByProductId("1");
         log.info(productInfo.toString());
